@@ -49,6 +49,7 @@
     "db:push": "prisma db push",
     "kill": "sudo kill -9 `sudo lsof -t -i:3020`",
     "start": "dotenv -- nodemon",
+    "dev": "dotenv -- nodemon",
     "start:production": "node --experimental-specifier-resolution=node ./dist/src/index.js",
     "pm2:delete": "pm2 delete elcap-api",
     "pm2:start": "pm2 start npm --name elcap-api -- start",
