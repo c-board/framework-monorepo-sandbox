@@ -1,27 +1,24 @@
 import type { Application } from "express";
 import express from "express";
 import cors from "cors";
-import * as http from "http";
 
 const app: Application = express();
 const hostname = "127.0.0.1";
 const port = 8080;
 
 const corsOptions = {
-  credentials: true,
+  credentials: false,
   optionsSuccessStatus: 200,
-  origin: "http://localhost:3001",
+  origin: "http://127.0.0.1:3008",
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
 
-const server = http.createServer((req: any, res: any) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World");
+app.get("/test", (req, res) => {
+  res.json({ data: "Hello World" });
 });
 
-server.listen(port, hostname, () => {
+app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });

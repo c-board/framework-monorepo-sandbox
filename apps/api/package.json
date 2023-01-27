@@ -7,7 +7,6 @@
   "dependencies": {
     "@prisma/client": "^4.6.1",
     "@sendgrid/mail": "^7.7.0",
-    "axios": "^1.2.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "csv-parse": "^5.3.2",
@@ -51,13 +50,6 @@
     "start": "dotenv -- nodemon",
     "dev": "dotenv -- nodemon",
     "start:production": "node --experimental-specifier-resolution=node ./dist/src/index.js",
-    "pm2:delete": "pm2 delete elcap-api",
-    "pm2:start": "pm2 start npm --name elcap-api -- start",
-    "pm2:start:production": "pm2 start npm --name elcap-api -- run start:production",
-    "pm2:stop": "pm2 stop elcap-api",
-    "pm2:restart": "pm2 restart elcap-api",
-    "pm2:reload": "pm2 reload elcap-api",
     "eslint": "eslint . --ext .ts,.tsx"
   }
-
 }
