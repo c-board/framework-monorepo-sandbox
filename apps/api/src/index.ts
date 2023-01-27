@@ -12,11 +12,36 @@ const corsOptions = {
   origin: "http://127.0.0.1:3008",
 };
 
+const dogs = [
+  {
+    id: 1,
+    name: "Opie",
+  },
+  {
+    id: 2,
+    name: "Juno",
+  },
+];
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/test", (req, res) => {
-  res.json({ data: "Hello World" });
+  res.json(dogs);
+});
+
+app.put("/test", (req, res) => {
+  const { name, id } = req.body;
+  dogs.push({ name, id });
+  res.json(dogs);
+});
+
+app.delete("/test/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = dogs.findIndex((dog) => dog.id === id);
+  dogs.splice(index, 1);
+  res.json(dogs);
+  res.send("Data deleted successfully");
 });
 
 app.listen(port, hostname, () => {
