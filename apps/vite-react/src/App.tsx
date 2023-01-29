@@ -11,7 +11,6 @@ import { getData, putData, deleteData } from "./api";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [dogs, setDogs] = useState<any>([]);
   const [newDog, setNewDog] = useState<any>({});
 
@@ -23,6 +22,16 @@ function App() {
   async function updateDogs() {
     const value = await getData();
     setDogs(value);
+  }
+
+  async function handleKeyDown(e: any) {
+    const currentValue = { name: e.target.value };
+
+    setNewDog(currentValue);
+    if (e.keyCode === 13) {
+      await putData(currentValue);
+      updateDogs();
+    }
   }
 
   async function handleAdd() {
@@ -49,7 +58,6 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
       {dogs?.length ? (
         dogs.map(({ name, id }: Dog) => (
           <div className="App__dogs" key={hash(name)}>
@@ -60,24 +68,8 @@ function App() {
       ) : (
         <p>No dogs</p>
       )}
-      <input
-        type="text"
-        onChange={(e) =>
-          setNewDog({ id: dogs.length + 1, name: e.target.value })
-        }
-      />
+      <input type="text" onKeyDown={(e) => handleKeyDown(e)} />
       <button onClick={handleAdd}>add</button>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   );
 }

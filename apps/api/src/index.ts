@@ -26,17 +26,17 @@ const dogs = [
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get("/test", (req, res) => {
+app.get("/dogs", (req, res) => {
   res.json(dogs);
 });
 
-app.put("/test", (req, res) => {
+app.put("/dogs", (req, res) => {
   const { name, id } = req.body;
   dogs.push({ name, id });
   res.json(dogs);
 });
 
-app.delete("/test/:id", (req, res) => {
+app.delete("/dogs/:id", (req, res) => {
   const id = Number(req.params.id);
   const index = dogs.findIndex((dog) => dog.id === id);
   dogs.splice(index, 1);
