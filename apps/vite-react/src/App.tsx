@@ -62,6 +62,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
+      <h1>Vite + React</h1>
       {dogs?.length ? (
         dogs.map(({ name, id }: Dog) => (
           <div className="App__dogs" key={hash(name)}>

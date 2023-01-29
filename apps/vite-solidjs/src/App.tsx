@@ -1,9 +1,55 @@
-import { createSignal } from 'solid-js'
-import solidLogo from './assets/solid.svg'
-import './App.css'
+import { createSignal, For, onMount } from "solid-js";
+import solidLogo from "./assets/solid.svg";
+
+// api
+import { getData, putData, deleteData } from "./api";
+
+// styles
+import "./App.css";
+
+type Dog = {
+  id: number;
+  name: string;
+};
 
 function App() {
-  const [count, setCount] = createSignal(0)
+  const [dogs, setDogs] = createSignal<any>([]);
+  const [newDog, setNewDog] = createSignal<any>({});
+  const [inputValue, setInputValue] = createSignal<string>("");
+
+  async function updateDogs() {
+    const value = await getData();
+    console.log("value:", value);
+    setDogs(value);
+  }
+
+  async function handleKeyDown(e: any) {
+    const currentValue = { name: e.target.value };
+
+    setNewDog(currentValue);
+    setInputValue(e.target.value);
+    if (e.keyCode === 13) {
+      await putData(currentValue);
+      updateDogs();
+      setInputValue("");
+    }
+  }
+
+  async function handleAdd() {
+    await putData(newDog());
+    updateDogs();
+    setInputValue("");
+  }
+
+  async function handleDelete(id: number) {
+    await deleteData(id);
+    updateDogs();
+  }
+
+  onMount(() => {
+    updateDogs();
+  });
+  console.log("dogs:", dogs());
 
   return (
     <div class="App">
@@ -16,19 +62,30 @@ function App() {
         </a>
       </div>
       <h1>Vite + Solid</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count()}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      {dogs()?.length ? (
+        <For each={dogs()}>
+          {({ name, id }: Dog) => (
+            <div class="App__dogs">
+              <h5>{name}</h5>
+              <button onClick={() => handleDelete(id)}>delete</button>
+            </div>
+          )}
+        </For>
+      ) : (
+        <p>No dogs</p>
+      )}
+      <div class="App__dogs--input">
+        <input
+          type="text"
+          value={inputValue()}
+          onChange={(e) => setInputValue(e.currentTarget.value)}
+          // onInput={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
+        <button onClick={handleAdd}>add</button>
       </div>
-      <p class="read-the-docs">
-        Click on the Vite and Solid logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
