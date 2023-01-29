@@ -40,8 +40,19 @@
   color: #888;
 }
 
-.App__dogs {
+.App__dogs,
+.App__dogs--input {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+button {
+  width: 100px;
+}
+
+input {
+  max-width: 100px;
+  padding: 7px;
 }

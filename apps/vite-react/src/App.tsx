@@ -13,6 +13,7 @@ import "./App.css";
 function App() {
   const [dogs, setDogs] = useState<any>([]);
   const [newDog, setNewDog] = useState<any>({});
+  const [inputValue, setInputValue] = useState("");
 
   type Dog = {
     id: number;
@@ -28,15 +29,18 @@ function App() {
     const currentValue = { name: e.target.value };
 
     setNewDog(currentValue);
+    setInputValue(e.target.value);
     if (e.keyCode === 13) {
       await putData(currentValue);
       updateDogs();
+      setInputValue("");
     }
   }
 
   async function handleAdd() {
     await putData(newDog);
     updateDogs();
+    setInputValue("");
   }
 
   async function handleDelete(id: number) {
@@ -68,8 +72,15 @@ function App() {
       ) : (
         <p>No dogs</p>
       )}
-      <input type="text" onKeyDown={(e) => handleKeyDown(e)} />
-      <button onClick={handleAdd}>add</button>
+      <div className="App__dogs--input">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
+        <button onClick={handleAdd}>add</button>
+      </div>
     </div>
   );
 }
