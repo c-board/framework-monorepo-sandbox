@@ -19,7 +19,6 @@ function App() {
 
   async function updateDogs() {
     const value = await getData();
-    console.log("value:", value);
     setDogs(value);
   }
 
@@ -49,7 +48,6 @@ function App() {
   onMount(() => {
     updateDogs();
   });
-  console.log("dogs:", dogs());
 
   return (
     <div class="App">
