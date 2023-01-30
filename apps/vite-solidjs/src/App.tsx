@@ -52,10 +52,10 @@ function App() {
   return (
     <div class="App">
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev">
           <img src="/vite.svg" class="logo" alt="Vite logo" />
         </a>
-        <a href="https://www.solidjs.com" target="_blank">
+        <a href="https://www.solidjs.com">
           <img src={solidLogo} class="logo solid" alt="Solid logo" />
         </a>
       </div>
@@ -77,7 +77,6 @@ function App() {
           type="text"
           value={inputValue()}
           onChange={(e) => setInputValue(e.currentTarget.value)}
-          // onInput={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => handleKeyDown(e)}
         />
         <button onClick={handleAdd}>add</button>

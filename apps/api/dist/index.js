@@ -1,49 +1,46 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const http = __importStar(require("http"));
 const app = (0, express_1.default)();
 const hostname = "127.0.0.1";
 const port = 8080;
 const corsOptions = {
-    credentials: true,
+    credentials: false,
     optionsSuccessStatus: 200,
-    origin: "http://localhost:3001",
+    origin: "http://127.0.0.1:3008",
 };
-app.use((0, cors_1.default)(corsOptions));
+const dogs = [
+    {
+        id: 1,
+        name: "Opie",
+    },
+    {
+        id: 2,
+        name: "Juno",
+    },
+];
+// app.use(cors(corsOptions));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/plain");
-    res.end("Hello World");
+app.get("/dogs", (req, res) => {
+    res.json(dogs);
 });
-server.listen(port, hostname, () => {
+app.put("/dogs", (req, res) => {
+    const { name, id } = req.body;
+    dogs.push({ name, id });
+    res.json(dogs);
+});
+app.delete("/dogs/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const index = dogs.findIndex((dog) => dog.id === id);
+    dogs.splice(index, 1);
+    res.json(dogs);
+    res.send("Data deleted successfully");
+});
+app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
