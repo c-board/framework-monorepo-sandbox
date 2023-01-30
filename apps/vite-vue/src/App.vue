@@ -61,7 +61,7 @@ export default {
       </div>
     </div>
     <p v-else>No dogs</p>
-    <div class="App__dogs--input">
+    <div class="App__input">
       <input type="text" v-model="inputValue" @keydown="handleKeyDown" />
       <button @click="handleAdd">add</button>
     </div>
@@ -82,7 +82,7 @@ export default {
 }
 
 .App__dogs,
-.App__dogs--input {
+.App__input {
   display: flex;
   align-items: center;
   justify-content: space-between;

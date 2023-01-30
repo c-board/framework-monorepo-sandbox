@@ -41,7 +41,7 @@
 }
 
 .App__dogs,
-.App__dogs--input {
+.App__input {
   display: flex;
   align-items: center;
   justify-content: space-between;

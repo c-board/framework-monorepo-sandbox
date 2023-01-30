@@ -72,7 +72,7 @@ function App() {
       ) : (
         <p>No dogs</p>
       )}
-      <div class="App__dogs--input">
+      <div class="App__input">
         <input
           type="text"
           value={inputValue()}

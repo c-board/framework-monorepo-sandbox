@@ -58,7 +58,7 @@
   {:else}
     <p>No dogs</p>
   {/if}
-  <div class="App__dogs--input">
+  <div class="App__input">
     <input type="text" bind:value={inputValue} on:keydown={handleKeyDown} />
     <button on:click={handleAdd}>add</button>
   </div>
@@ -78,7 +78,7 @@
   }
 
   .App__dogs,
-  .App__dogs--input {
+  .App__input {
     display: flex;
     align-items: center;
     justify-content: space-between;
