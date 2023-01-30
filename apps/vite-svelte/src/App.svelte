@@ -1,31 +1,68 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import Counter from './lib/Counter.svelte'
+  import { onMount } from "svelte";
+  import { getData, putData, deleteData } from "./api.js";
+  import svelteLogo from "./assets/svelte.svg";
+
+  let dogs = [];
+  let newDog = {};
+  let inputValue = "";
+
+  const updateDogs = async () => {
+    const value = await getData();
+    dogs = value;
+  };
+
+  const handleKeyDown = async (e) => {
+    newDog = { name: e.target.value };
+    inputValue = e.target.value;
+    if (e.keyCode === 13) {
+      await putData(newDog);
+      updateDogs();
+      inputValue = "";
+    }
+  };
+
+  const handleAdd = async () => {
+    await putData(newDog);
+    updateDogs();
+    inputValue = "";
+  };
+
+  const handleDelete = async (id) => {
+    await deleteData(id);
+    updateDogs();
+  };
+
+  onMount(async () => {
+    updateDogs();
+  });
 </script>
 
-<main>
+<div class="App">
   <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer"> 
+    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
       <img src="/vite.svg" class="logo" alt="Vite Logo" />
     </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer"> 
+    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
     </a>
+    <h1>Vite + Svelte</h1>
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
+  {#if dogs.length}
+    {#each dogs as { name, id }}
+      <div class="App__dogs">
+        <h5>{name}</h5>
+        <button on:click={() => handleDelete(id)}>delete</button>
+      </div>
+    {/each}
+  {:else}
+    <p>No dogs</p>
+  {/if}
+  <div class="App__dogs--input">
+    <input type="text" bind:value={inputValue} on:keydown={handleKeyDown} />
+    <button on:click={handleAdd}>add</button>
   </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
+</div>
 
 <style>
   .logo {
@@ -39,7 +76,21 @@
   .logo.svelte:hover {
     filter: drop-shadow(0 0 2em #ff3e00aa);
   }
-  .read-the-docs {
-    color: #888;
+
+  .App__dogs,
+  .App__dogs--input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  button {
+    width: 100px;
+  }
+
+  input {
+    max-width: 100px;
+    padding: 7px;
   }
 </style>

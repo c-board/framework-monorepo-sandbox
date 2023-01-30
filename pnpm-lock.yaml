@@ -139,6 +139,7 @@ importers:
     specifiers:
       '@sveltejs/vite-plugin-svelte': ^2.0.0
       '@tsconfig/svelte': ^3.0.0
+      axios: ^1.2.6
       eslint-config-custom: '*'
       svelte: ^3.54.0
       svelte-check: ^2.10.0
@@ -146,6 +147,8 @@ importers:
       tslib: ^2.4.1
       typescript: ^4.9.3
       vite: ^4.0.0
+    dependencies:
+      axios: 1.2.6
     devDependencies:
       '@sveltejs/vite-plugin-svelte': 2.0.2_svelte@3.55.1+vite@4.0.4
       '@tsconfig/svelte': 3.0.0
