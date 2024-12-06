@@ -1,6 +1,6 @@
-# Turborepo starter
+# Framework monorepo sandbox
 
-This is an official pnpm starter turborepo.
+A quick sandbox turbo repo to checkout various frontend frameworks.
 
 ## What's inside?
 
